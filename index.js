@@ -20,24 +20,26 @@ scene.add( light );
 // Create a triangle
 const geometry = new THREE.BufferGeometry();
 const vertices =  [
-	-1, -1,  0,
-	 1, -1,  0,
-     0,  1,  0,
+	-1,-1.7, 0,
+     1,-1.7, 0,
+     1, 1.7, 0,
+    -1, 1.7, 0
 ];
 let a = 1
 const uvs = [
-    0.0,0.0,
-    a  ,0.0,
-    a  ,a  ,
-    0.0,a
+    0,0,
+    1,0,
+    1,1,
+    0,1
 ];
 geometry.setAttribute( 'position', new THREE.BufferAttribute( new Float32Array(vertices), 3 ) );
 geometry.setAttribute('uv', new THREE.BufferAttribute( new Float32Array(uvs), 2))
+geometry.setIndex([ 0, 1, 2, 2, 3, 0 ]);
 geometry.computeVertexNormals()
 
 // Load leaf texture
 const leafTexture = new THREE.TextureLoader().load( 'textures/leaf2.png' );
-const leafMaterial = new THREE.MeshStandardMaterial( { map: leafTexture } );
+const leafMaterial = new THREE.MeshBasicMaterial( { map: leafTexture } );
 const leaf = new THREE.Mesh( geometry, leafMaterial );
 scene.add(leaf)
 leaf.position.z = -5
