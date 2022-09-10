@@ -13,10 +13,6 @@ const light = new THREE.AmbientLight( 0x404040 ); // soft white light
 scene.add( light );
 
 
-
-
-
-
 // Create a triangle
 const geometry = new THREE.BufferGeometry();
 const vertices =  [
@@ -39,24 +35,25 @@ geometry.computeVertexNormals()
 
 // Load leaf texture
 const leafTexture = new THREE.TextureLoader().load( 'textures/leaf2.png' );
-const leafMaterial = new THREE.MeshBasicMaterial( { map: leafTexture } );
+const leafMaterial = new THREE.MeshStandardMaterial( { side: THREE.DoubleSide, map: leafTexture, alphaTest:0.5 } );
 const leaf = new THREE.Mesh( geometry, leafMaterial );
 scene.add(leaf)
 leaf.position.z = -5
 
-const g = new THREE.BoxGeometry( 1, 1, 1 );
-const m = new THREE.MeshStandardMaterial( {color: 0x00ff00} );
-const cube = new THREE.Mesh( g, m );
-scene.add( cube );
-cube.position.z = -6
-cube.position.x = 1
-
-
-
-
+let clock = new THREE.Clock();
+let t = 0;
 
 function animate() {
 	requestAnimationFrame( animate );
+    let delta = clock.getDelta();
+    t += delta
+    leaf.rotation.y += 0.007
+    leaf.rotation.x += 0.004
+    leaf.position.x = 2*Math.cos(t)
+    leaf.position.y = 2*Math.sin(t)
+
+    
+    
 	renderer.render( scene, camera );
 }
 animate();
